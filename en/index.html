@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vasilisk Virtual Studio — a studio where you train your own AI</title>
+<meta name="description" content="Vasilisk is a macOS desktop studio where you train your own AI: text, images, video, music, voice, vision. Like Ableton Live, but instead of audio tracks there are models. Free Dev build and open-source Vasilisk X on GitHub.">
+<meta name="theme-color" content="#07070b">
+<link rel="canonical" href="https://vasiliskstudio.github.io/en/">
+<link rel="alternate" hreflang="ru" href="https://vasiliskstudio.github.io/">
+<link rel="alternate" hreflang="en" href="https://vasiliskstudio.github.io/en/">
+<link rel="alternate" hreflang="x-default" href="https://vasiliskstudio.github.io/en/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Vasilisk Virtual Studio">
+<meta property="og:title" content="Vasilisk Virtual Studio — a studio where you train your own AI">
+<meta property="og:description" content="Text, images, video, music, voice, vision — on your own Mac, on your own data. Like Ableton Live, but instead of tracks there are models.">
+<meta property="og:url" content="https://vasiliskstudio.github.io/en/">
+<meta property="og:image" content="https://vasiliskstudio.github.io/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Vasilisk Virtual Studio">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../assets/favicon-96.png" type="image/png" sizes="96x96">
+<link rel="icon" href="../favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Vasilisk Virtual Studio",
+  "alternateName": "Vasilisk",
+  "operatingSystem": "macOS",
+  "applicationCategory": "DeveloperApplication",
+  "softwareVersion": "0.9",
+  "inLanguage": "en",
+  "description": "A macOS desktop studio where you train your own AI: text, images, video, music, voice, vision.",
+  "url": "https://vasiliskstudio.github.io/en/",
+  "image": "https://vasiliskstudio.github.io/assets/og.jpg",
+  "downloadUrl": "https://github.com/VasiliskStudio/vasilisk-dev/releases",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "sameAs": ["https://github.com/VasiliskStudio", "https://t.me/vasiliskstudio", "https://www.tiktok.com/@vasilisk.studio"]
+}
+</script>
+<link rel="preload" href="../assets/handjet-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/handjet-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<canvas id="gl" aria-hidden="true"></canvas>
+<div class="vignette" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="cursor" aria-hidden="true"><i class="c-dot"></i><i class="c-ring"><span class="c-label"></span></i></div>
+<div class="progress" aria-hidden="true"><i></i></div>
+
+<header class="top">
+  <a class="brand" href="#hero" data-nav>
+    <img src="../assets/logo.svg" alt="" class="brand-mark">
+    <span class="brand-name">Vasilisk</span>
+  </a>
+  <nav class="menu">
+    <a href="#what" data-nav data-i18n="nav.what">What it is</a>
+    <a href="#types" data-nav data-i18n="nav.types">Kinds of AI</a>
+    <a href="#shots" data-nav data-i18n="nav.shots">The window</a>
+    <a href="#film" data-nav data-i18n="nav.film">Film</a>
+  </nav>
+  <div class="top-right">
+    <button class="chip" id="sound" aria-pressed="false" data-magnet>
+      <span class="eq"><i></i><i></i><i></i><i></i></span>
+      <span data-i18n="ui.sound">Sound</span>
+    </button>
+    <button class="chip lang" id="lang" data-magnet><span class="on">EN</span><span class="sep">/</span><span class="off">RU</span></button>
+    <a class="chip ghost hide-s" href="https://github.com/VasiliskStudio" target="_blank" rel="noopener" data-magnet>GitHub ↗</a>
+  </div>
+</header>
+
+<main>
+
+  <section class="sec hero" id="hero">
+    <div class="stage hero-inner">
+      <div class="logo-slot" data-slot="hero">
+        <svg class="logo-draw" viewBox="4 4 116 94" aria-label="Vasilisk">
+          <mask id="eye" maskUnits="userSpaceOnUse" x="-30" y="-30" width="180" height="160">
+            <rect x="-30" y="-30" width="180" height="160" fill="#fff"/>
+            <circle cx="102.2" cy="36.9" r="1.9" fill="#000"/>
+          </mask>
+          <g mask="url(#eye)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path class="p1" d="M10 60 L26 90 L48 12 L114 12" stroke-width="8"/>
+            <path class="p2" d="M100 36 C97 29 90 26 82 26 C70 26 62 31 62 40 C62 50 72 53 83 56 C95 59 104 64 104 74 C104 84 95 90 83 90" stroke-width="8"/>
+            <path class="p3" d="M98.3 31.8 L106.5 35.4 L104.3 46.1 L95.1 40.2 Z" stroke-width="2.6"/>
+            <path class="p4" d="M104.3 46.1 L106 50.2 M106 50.2 L104.4 53.8 M106 50.2 L109 52.3" stroke-width="1.7"/>
+          </g>
+        </svg>
+      </div>
+      <h1 class="title" aria-label="Vasilisk"><span class="word" data-split>Vasilisk</span></h1>
+      <p class="tagline"><span class="mask"><span data-i18n="hero.tagline">A studio where you train your own AI</span></span></p>
+      <p class="lede" data-i18n="hero.lede">Text, images, video, music, voice, vision — on your own Mac, on your own data. Like Ableton Live, but instead of audio tracks there are models, and instead of clips there are their versions.</p>
+      <div class="cta">
+        <a class="btn primary" href="https://github.com/VasiliskStudio" target="_blank" rel="noopener" data-magnet>
+          <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M8 0a8 8 0 00-2.5 15.6c.4.1.5-.2.5-.4v-1.4c-2.2.5-2.7-1-2.7-1-.4-.9-.9-1.2-.9-1.2-.7-.5.1-.5.1-.5.8.1 1.2.8 1.2.8.7 1.2 1.9.9 2.4.7.1-.5.3-.9.5-1.1-1.8-.2-3.6-.9-3.6-3.9 0-.9.3-1.6.8-2.1-.1-.2-.4-1 .1-2.1 0 0 .7-.2 2.2.8a7.6 7.6 0 014 0c1.5-1 2.2-.8 2.2-.8.5 1.1.2 1.9.1 2.1.5.5.8 1.2.8 2.1 0 3-1.8 3.7-3.6 3.9.3.3.6.8.6 1.6v2.3c0 .2.1.5.5.4A8 8 0 008 0z"/></svg>
+          <span data-i18n="hero.github">See it on GitHub</span>
+        </a>
+        <a class="btn" href="#what" data-nav data-magnet><span data-i18n="hero.more">How it works</span><i class="arr">↓</i></a>
+      </div>
+    </div>
+    <div class="scroll-hint" aria-hidden="true"><span data-i18n="ui.scroll">scroll</span><i></i></div>
+  </section>
+
+  <div class="band" aria-hidden="true">
+    <div class="band-row r1"><div class="band-track" data-i18n="band.a">TEXT / IMAGES / VIDEO / MUSIC / VOICE / VISION / TABLES / FROM SCRATCH /&nbsp;</div></div>
+    <div class="band-row r2"><div class="band-track" data-i18n="band.b">DATA -&gt; TRAINING -&gt; EVALUATION -&gt; VERSIONS -&gt; DEPLOY -&gt;&nbsp;</div></div>
+  </div>
+
+  <section class="sec what" id="what">
+    <div class="stage what-grid">
+      <div class="col">
+        <p class="kicker"><span class="num">01</span><span data-i18n="what.kicker">Desktop app · macOS</span></p>
+        <h2 data-i18n="what.h">A model’s whole path in one window</h2>
+        <p class="big" data-i18n="what.p">Data, training, evaluation, versions, deployment. Nothing leaves for the cloud unless you want it to: the model lives on your Mac, learns from your examples and answers with the internet off.</p>
+        <ul class="steps">
+          <li data-magnet-soft><i class="sw" style="--c:#c98f5a"></i><b data-i18n="what.s1b">Track</b><span data-i18n="what.s1">a model of any kind</span></li>
+          <li data-magnet-soft><i class="sw" style="--c:#c56b9a"></i><b data-i18n="what.s2b">Clip</b><span data-i18n="what.s2">its trained, scored version</span></li>
+          <li data-magnet-soft><i class="sw" style="--c:#5ec0a8"></i><b data-i18n="what.s3b">Effects</b><span data-i18n="what.s3">reshape the answer without training</span></li>
+          <li data-magnet-soft><i class="sw" style="--c:#8f7fd6"></i><b data-i18n="what.s4b">Set</b><span data-i18n="what.s4">a line-up of versions, switched at once</span></li>
+        </ul>
+      </div>
+      <div class="facts">
+        <div class="fact"><b data-count="8">8</b><span data-i18n="what.f1">kinds of models</span></div>
+        <div class="fact"><b class="plain" data-i18n="what.f2b">$0</b><span data-i18n="what.f2">to train on your own Mac</span></div>
+        <div class="fact"><b>∞</b><span data-i18n="what.f3">versions, any one can be rolled back</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec types" id="types">
+    <div class="stage">
+      <header class="sec-head">
+        <p class="kicker"><span class="num">02</span><span data-i18n="types.kicker">One studio</span></p>
+        <h2 data-i18n="types.h">Eight kinds of AI</h2>
+        <p class="sub" data-i18n="types.sub">Hover — the ring turns to face you.</p>
+      </header>
+      <div class="ring-wrap">
+        <div class="ring" id="ring">
+          <button class="type" style="--c:#c98f5a"><span class="tn">01</span>
+            <b data-i18n="t.text">Text</b><em data-i18n="t.text.d">LoRA fine-tuning, knowledge from your PDFs, a judge, GGUF export</em></button>
+          <button class="type" style="--c:#c56b9a"><span class="tn">02</span>
+            <b data-i18n="t.img">Images</b><em data-i18n="t.img.d">SD 1.5 on Metal, LoRA of your own style, upscale and background cut</em></button>
+          <button class="type" style="--c:#7f6bd0"><span class="tn">03</span>
+            <b data-i18n="t.video">Video</b><em data-i18n="t.video.d">Short clips in your own style, frames from your own footage</em></button>
+          <button class="type" style="--c:#5aa0c9"><span class="tn">04</span>
+            <b data-i18n="t.music">Music</b><em data-i18n="t.music.d">MusicGen: a track from scratch or a continuation of your sound</em></button>
+          <button class="type" style="--c:#8f7fd6"><span class="tn">05</span>
+            <b data-i18n="t.voice">Voice</b><em data-i18n="t.voice.d">Hearing, speech, a wake word — grouped into one assistant</em></button>
+          <button class="type" style="--c:#5ec0a8"><span class="tn">06</span>
+            <b data-i18n="t.vision">Vision</b><em data-i18n="t.vision.d">A classifier on your photos, an “I don’t know” threshold, Core ML</em></button>
+          <button class="type" style="--c:#6ec98f"><span class="tn">07</span>
+            <b data-i18n="t.tab">Tables</b><em data-i18n="t.tab.d">Boosting and linear models, forecast and what drives it</em></button>
+          <button class="type" style="--c:#c9b45a"><span class="tn">08</span>
+            <b data-i18n="t.scratch">From scratch</b><em data-i18n="t.scratch.d">Your own vocabulary and your own transformer — from the first token</em></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec shots" id="shots">
+    <div class="stage">
+      <header class="sec-head">
+        <p class="kicker"><span class="num">03</span><span data-i18n="shots.kicker">The real window</span></p>
+        <h2 data-i18n="shots.h">This is the studio</h2>
+        <p class="sub" data-i18n="shots.sub">Drag or swipe — the shots will turn.</p>
+      </header>
+      <div class="deck" id="deck" data-cursor="drag">
+        <figure class="card"><img src="../assets/shots/1-tyomnaya-versii.jpg" alt="Vasilisk window: versions" draggable="false"><figcaption data-i18n="shots.c1">Versions: models as tracks, their versions as clips</figcaption></figure>
+        <figure class="card"><img src="../assets/shots/2-tyomnaya-obuchenie.jpg" alt="Vasilisk window: training" draggable="false"><figcaption data-i18n="shots.c2">Training: live curves, checkpoints, the best point</figcaption></figure>
+        <figure class="card"><img src="../assets/shots/7-tyomnaya-kartinki.jpg" alt="Vasilisk window: images" draggable="false"><figcaption data-i18n="shots.c3">Images: a grid of tries — keep it or bin it</figcaption></figure>
+        <figure class="card"><img src="../assets/shots/5-svetlaya.jpg" alt="Vasilisk window: light theme" draggable="false"><figcaption data-i18n="shots.c4">Light theme</figcaption></figure>
+        <figure class="card"><img src="../assets/shots/3-belaya-versii.jpg" alt="Vasilisk window: white theme" draggable="false"><figcaption data-i18n="shots.c5">White theme</figcaption></figure>
+      </div>
+      <div class="deck-nav">
+        <button class="round" id="prev" aria-label="Previous" data-magnet>←</button>
+        <div class="dots" id="dots"></div>
+        <button class="round" id="next" aria-label="Next" data-magnet>→</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec film" id="film">
+    <div class="stage">
+      <header class="sec-head">
+        <p class="kicker"><span class="num">04</span><span data-i18n="film.kicker">Promo</span></p>
+        <h2 data-i18n="film.h">Thirty seconds of Vasilisk</h2>
+        <p class="sub" data-i18n="film.sub">Hover for a silent preview. Click to watch it all.</p>
+      </header>
+      <div class="screen" id="screen" data-cursor="play">
+        <video id="promo" poster="../assets/promo-poster.jpg" playsinline muted loop preload="metadata">
+          <source src="../assets/promo.mp4" type="video/mp4">
+        </video>
+        <button class="play" id="play" aria-label="Play"><i></i></button>
+        <div class="screen-bar"><i id="bar"></i></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec end" id="end">
+    <div class="stage end-inner">
+      <div class="end-slot" data-slot="end"><img src="../assets/logo.svg" alt="" class="end-mark"></div>
+      <h2 class="end-h" data-i18n="end.h">The code is open</h2>
+      <p class="sub" data-i18n="end.sub">The open studio Vasilisk X under MPL 2.0, the full Dev build and its releases — all on GitHub.</p>
+      <a class="btn primary big-btn" href="https://github.com/VasiliskStudio" target="_blank" rel="noopener" data-magnet>
+        <svg viewBox="0 0 16 16" width="17" height="17" aria-hidden="true"><path fill="currentColor" d="M8 0a8 8 0 00-2.5 15.6c.4.1.5-.2.5-.4v-1.4c-2.2.5-2.7-1-2.7-1-.4-.9-.9-1.2-.9-1.2-.7-.5.1-.5.1-.5.8.1 1.2.8 1.2.8.7 1.2 1.9.9 2.4.7.1-.5.3-.9.5-1.1-1.8-.2-3.6-.9-3.6-3.9 0-.9.3-1.6.8-2.1-.1-.2-.4-1 .1-2.1 0 0 .7-.2 2.2.8a7.6 7.6 0 014 0c1.5-1 2.2-.8 2.2-.8.5 1.1.2 1.9.1 2.1.5.5.8 1.2.8 2.1 0 3-1.8 3.7-3.6 3.9.3.3.6.8.6 1.6v2.3c0 .2.1.5.5.4A8 8 0 008 0z"/></svg>
+        github.com/VasiliskStudio
+      </a>
+      <div class="repos">
+        <a class="repo" href="https://github.com/VasiliskStudio/vasilisk-dev" target="_blank" rel="noopener" data-tilt><b>vasilisk-dev <i>↗</i></b><span data-i18n="end.r1">full build, releases</span></a>
+        <a class="repo" href="https://github.com/VasiliskStudio/vasilisk-x" target="_blank" rel="noopener" data-tilt><b>vasilisk-x <i>↗</i></b><span data-i18n="end.r2">open source, MPL 2.0</span></a>
+      </div>
+      <footer class="foot">
+        <span>Vasilisk Virtual Studio 0.9</span>
+        <span class="dot">·</span>
+        <a href="https://t.me/vasiliskstudio" target="_blank" rel="noopener">Telegram</a>
+        <span class="dot">·</span>
+        <a href="https://github.com/VasiliskStudio" target="_blank" rel="noopener">GitHub</a>
+      </footer>
+    </div>
+  </section>
+
+</main>
+
+<script type="module" src="../js/scene.js"></script>
+<script type="module" src="../js/app.js"></script>
+</body>
+</html>
