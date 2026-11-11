@@ -66,6 +66,7 @@
     <a href="#types" data-nav data-i18n="nav.types">Типы ИИ</a>
     <a href="#shots" data-nav data-i18n="nav.shots">Окно</a>
     <a href="#film" data-nav data-i18n="nav.film">Ролик</a>
+    <a href="articles/" data-local data-i18n="nav.articles">Статьи</a>
   </nav>
   <div class="top-right">
     <button class="chip" id="sound" aria-pressed="false" data-magnet>
@@ -210,7 +211,35 @@
     </div>
   </section>
 
-  <!-- 6 — финал -->
+  <!-- 6 — статьи: короткий блок со ссылкой на раздел articles/ -->
+  <section class="sec read" id="read">
+    <div class="stage read-inner">
+      <div class="read-text">
+        <p class="kicker"><span class="num">05</span><span data-i18n="read.kicker">Журнал студии</span></p>
+        <h2 data-i18n="read.h">У нас есть свои статьи об ИИ</h2>
+        <p class="sub" data-i18n="read.sub">Разбираем вирусные ролики и научные работы: что правда, что преувеличено и что из этого мы пробуем в Vasilisk.</p>
+      </div>
+      <a class="btn primary big-btn read-btn" href="articles/" data-local data-magnet><span data-i18n="read.btn">Читать статьи</span><i class="arr r">→</i></a>
+    </div>
+  </section>
+
+  <!-- 6½ — скоро в Dev 0.9.1: то, что готово в коде, но ещё не выпущено -->
+  <section class="sec soon" id="soon">
+    <div class="stage">
+      <header class="sec-head">
+        <p class="kicker"><span class="num">06</span><span data-i18n="soon.kicker">Скоро в Dev 0.9.1</span></p>
+        <h2 data-i18n="soon.h">ИИ, который спит и помнит</h2>
+        <p class="sub" data-i18n="soon.sub">Готово в коде, проверяем перед выпуском. Как это работает и что получилось в опытах, рассказываем в статьях.</p>
+      </header>
+      <ul class="steps soon-list">
+        <li style="--c:#9d8ff0"><i class="sw"></i><b data-i18n="soon.sleep">Сон</b><span data-i18n="soon.sleep.d">Ночью модель переносит разговоры дня в новый слой и не забывает старое. Утром проверяет себя и показывает, что выучила.</span></li>
+        <li style="--c:#5ec0a8"><i class="sw"></i><b data-i18n="soon.chat">Чат</b><span data-i18n="soon.chat.d">Отдельный экран для разговора с моделью. Днём общаешься, ночью она засыпает сама по расписанию.</span></li>
+        <li style="--c:#c98f5a"><i class="sw"></i><b>.vsk</b><span data-i18n="soon.vsk.d">Свой файл модели: ночи отдельными слоями, дневник, порог «не знаю», характер и параметры ответа. Любую ночь можно забыть даже после переноса на другой мак.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 7 — финал -->
   <section class="sec end" id="end">
     <div class="stage end-inner">
       <div class="end-slot" data-slot="end"><img src="assets/logo.svg" alt="" class="end-mark"></div>
@@ -226,6 +255,8 @@
       </div>
       <footer class="foot">
         <span>Vasilisk Virtual Studio 0.9</span>
+        <span class="dot">·</span>
+        <a href="articles/" data-local data-i18n="nav.articles">Статьи</a>
         <span class="dot">·</span>
         <a href="https://t.me/vasiliskstudio" target="_blank" rel="noopener">Telegram</a>
         <span class="dot">·</span>

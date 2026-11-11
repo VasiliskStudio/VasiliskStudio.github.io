@@ -1,0 +1,208 @@
+/* Vasilisk — раздел статей. Лёгкие страницы без 3D-сцены: цвета, шрифты, шапка, курсор и кнопки — из style.css,
+   здесь только то, чего на лендинге нет: список, фильтр, метки, текст статьи. */
+
+.a-page .top{background:rgba(7,7,11,.6);backdrop-filter:blur(22px) saturate(1.4);-webkit-backdrop-filter:blur(22px) saturate(1.4);border-bottom-color:var(--line)}
+.a-menu{display:flex}
+.a-main{
+  display:block;max-width:1180px;margin:0 auto;
+  padding:calc(70px + 7vh) clamp(18px,5vw,56px) 6vh;
+  animation:aIn 1s var(--slow) both;
+}
+@keyframes aIn{from{opacity:0;transform:translate3d(0,14px,0)}}
+.a-page .foot{margin-top:72px;padding-top:26px;border-top:1px solid var(--line)}
+.a-page .kicker{margin-bottom:14px}
+
+/* ───────── заголовок страницы ───────── */
+.a-h1{font-family:var(--pix);font-weight:500;letter-spacing:.012em;line-height:.96;
+  font-size:clamp(42px,6vw,84px);text-shadow:0 0 34px rgba(157,143,240,.18);margin-bottom:20px;text-wrap:balance}
+.a-lede{font-size:clamp(17px,1.6vw,21px);line-height:1.5;color:var(--ink-dim);max-width:62ch;text-wrap:pretty}
+.a-list-head{margin-bottom:clamp(28px,5vh,48px)}
+
+/* ───────── метки и теги ───────── */
+.labels{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.label{
+  position:relative;display:inline-flex;align-items:center;gap:7px;height:26px;padding:0 10px;
+  font-family:var(--pix);font-size:15px;line-height:1;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;
+  color:var(--violet);border:1px solid var(--line-hi);border-radius:var(--r);background:rgba(157,143,240,.06);
+}
+/* «Исследовано ИИ» — залитая плашка со значком и подсказкой */
+.label.ai{
+  z-index:3;color:#0b0a12;background:linear-gradient(100deg,#b3a7f7,var(--violet) 55%,#7fd3bf);border-color:transparent;
+  box-shadow:0 0 22px -4px rgba(157,143,240,.75);cursor:help;
+  transition:box-shadow .4s var(--ease),transform .5s var(--spring);
+}
+.label.ai svg{flex:none;animation:spark 3.2s var(--ease) infinite}
+@keyframes spark{0%,70%,100%{transform:none;opacity:1}80%{transform:rotate(90deg) scale(1.35);opacity:.75}}
+.label.ai:hover,.label.ai:focus-visible,.label.ai.open{box-shadow:0 0 30px -2px rgba(157,143,240,.95);outline:none}
+.ai-tip{
+  position:absolute;left:0;top:calc(100% + 10px);width:max-content;max-width:min(290px,calc(100vw - 36px));
+  padding:11px 13px;border:1px solid var(--line-hi);border-radius:var(--r);background:#14131d;
+  box-shadow:0 24px 50px -20px #000;
+  font-family:var(--sans);font-size:13.5px;line-height:1.45;letter-spacing:0;text-transform:none;text-align:left;white-space:normal;color:var(--ink);
+  opacity:0;visibility:hidden;transform:translateY(-4px);pointer-events:none;
+  transition:opacity .3s var(--ease),transform .5s var(--slow),visibility 0s .3s;
+}
+.ai-tip::before{content:'';position:absolute;left:18px;top:-5px;width:8px;height:8px;background:#14131d;
+  border-left:1px solid var(--line-hi);border-top:1px solid var(--line-hi);transform:rotate(45deg)}
+.label.ai:hover .ai-tip,.label.ai:focus-visible .ai-tip,.label.ai.open .ai-tip{opacity:1;visibility:visible;transform:none;transition-delay:0s}
+
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{
+  position:relative;z-index:1;display:inline-flex;align-items:center;height:26px;padding:0 10px;
+  font-size:12.5px;color:var(--ink-dim);border:1px solid var(--line);border-radius:999px;background:var(--glass);
+  transition:color .35s var(--ease),border-color .35s var(--ease),background .35s var(--ease);
+}
+.tag::before{content:'#';margin-right:2px;color:var(--ink-faint)}
+.tag:hover,.tag.on{color:var(--ink);border-color:var(--line-hi);background:rgba(157,143,240,.08)}
+
+.a-meta{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:13.5px;color:var(--ink-faint)}
+.a-meta time{font-family:var(--pix);font-size:17px;letter-spacing:.08em;color:var(--ink-dim)}
+
+/* ───────── фильтр (без JS скрыт: видно все статьи) ───────── */
+.filter{display:none;flex-direction:column;gap:10px;padding:16px 0 22px;border-top:1px solid var(--line)}
+html.js .filter{display:flex}
+.f-group{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.f-name{flex:none;width:74px;font-family:var(--pix);font-size:14px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faint)}
+.f-chip{height:30px}
+.f-chip.on{color:var(--violet);border-color:var(--line-hi);background:rgba(157,143,240,.1)}
+.f-chip.f-ai svg{color:var(--violet)}
+
+/* ───────── список ───────── */
+.a-list{border-bottom:1px solid var(--line)}
+.a-row{
+  position:relative;display:grid;grid-template-columns:170px minmax(0,1fr);gap:8px clamp(20px,4vw,56px);
+  padding:30px 0 32px;border-top:1px solid var(--line);
+  transition:background .6s var(--ease);
+}
+.a-row[hidden]{display:none}
+.a-row::before{content:'';position:absolute;left:0;top:-1px;width:100%;height:1px;background:var(--violet);
+  transform:scaleX(0);transform-origin:left;transition:transform .9s var(--slow)}
+.a-row:hover::before{transform:none}
+.a-row:hover{background:linear-gradient(90deg,rgba(157,143,240,.045),transparent 70%)}
+.a-side{padding-top:3px}
+.a-side .a-meta{flex-direction:column;align-items:flex-start;gap:2px}
+.a-side .dot{display:none}
+.a-title{font-family:var(--pix);font-weight:500;letter-spacing:.015em;line-height:1;font-size:clamp(30px,3.4vw,46px);
+  margin-bottom:12px;text-shadow:none;text-wrap:balance}
+.a-title a{transition:color .4s var(--ease)}
+.a-title a::after{content:'';position:absolute;inset:0}      /* вся строка — ссылка на статью */
+.a-row:hover .a-title a{color:#cfc7ff}
+.a-lead{color:var(--ink-dim);font-size:16px;line-height:1.55;max-width:68ch;margin-bottom:16px;text-wrap:pretty}
+.a-empty{padding:34px 0;border-top:1px solid var(--line);color:var(--ink-dim)}
+.a-empty a{color:var(--violet);text-decoration:underline;text-underline-offset:3px}
+
+/* ───────── страница статьи ───────── */
+.a-article{display:grid;grid-template-columns:200px minmax(0,720px);column-gap:clamp(36px,6vw,84px);justify-content:center}
+.a-head{grid-column:2;margin-bottom:clamp(28px,5vh,46px);padding-bottom:28px;border-bottom:1px solid var(--line)}
+.a-head .a-h1{font-size:clamp(38px,5vw,68px)}
+.a-head .a-lede{margin-bottom:20px}
+.a-head .a-meta{margin-bottom:14px}
+.back{display:inline-flex;align-items:center;gap:8px;margin-bottom:26px;font-size:14px;color:var(--ink-dim);transition:color .4s var(--ease)}
+.back i{font-style:normal;transition:transform .6s var(--spring)}
+.back:hover{color:var(--ink)}
+.back:hover i{transform:translateX(-4px)}
+
+.toc{grid-column:1;grid-row:2;align-self:start;position:sticky;top:96px;font-size:13.5px;line-height:1.35}
+.toc-h{font-family:var(--pix);font-size:14px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:12px}
+.toc ol{list-style:none;display:flex;flex-direction:column;border-left:1px solid var(--line)}
+.toc a{display:block;padding:6px 0 6px 14px;margin-left:-1px;border-left:1px solid transparent;color:var(--ink-faint);
+  transition:color .35s var(--ease),border-color .35s var(--ease)}
+.toc a:hover{color:var(--ink)}
+.toc a.on{color:var(--ink);border-left-color:var(--violet)}
+.prose{grid-column:2;grid-row:2;min-width:0}
+
+/* текст: удобная строка (~70 знаков), свободный межстрочный */
+.prose{font-size:18px;line-height:1.7;color:#d5d2e0;letter-spacing:-.006em;overflow-wrap:break-word}
+.prose > *:first-child{margin-top:0}
+.prose p{margin:0 0 1.1em;text-wrap:pretty}
+.prose strong{font-weight:600;color:var(--ink)}
+.prose h2{font-size:clamp(32px,3.4vw,44px);line-height:1;letter-spacing:.015em;margin:1.75em 0 .55em;text-shadow:none;scroll-margin-top:92px;text-wrap:balance}
+.prose h2::before{content:'';display:block;width:28px;height:2px;margin-bottom:16px;background:var(--violet);box-shadow:0 0 12px var(--violet)}
+.prose h3,.prose h4{font-family:var(--pix);font-weight:500;font-size:27px;line-height:1.05;letter-spacing:.02em;color:var(--ink);margin:1.5em 0 .5em;text-wrap:balance}
+.prose h4{font-size:22px}
+.prose a{color:#b9aefa;text-decoration:underline;text-decoration-color:rgba(157,143,240,.45);text-underline-offset:3px;
+  transition:color .3s var(--ease),text-decoration-color .3s var(--ease)}
+.prose a:hover{color:var(--ink);text-decoration-color:var(--violet)}
+.prose a[target="_blank"]::after{content:'\00a0↗';font-size:.8em;color:var(--ink-faint)}
+.prose ul,.prose ol{margin:0 0 1.2em;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:.55em}
+.prose li{position:relative;padding-left:26px}
+.prose ul > li::before{content:'';position:absolute;left:4px;top:.72em;width:7px;height:7px;border-radius:1px;background:var(--violet);box-shadow:0 0 10px rgba(157,143,240,.7)}
+.prose ol{counter-reset:n}
+.prose ol > li{counter-increment:n;padding-left:34px}
+.prose ol > li::before{content:counter(n,decimal-leading-zero);position:absolute;left:0;top:.12em;font-family:var(--num);font-size:17px;color:var(--violet)}
+.prose ul.sources,.prose ol.sources{font-size:15px;line-height:1.5;color:var(--ink-dim);gap:.7em}
+.prose blockquote{margin:1.5em 0;padding:4px 0 4px 22px;border-left:2px solid var(--violet);font-size:1.08em;color:var(--ink)}
+.prose blockquote p:last-child{margin-bottom:0}
+.prose hr{border:0;height:1px;background:var(--line);margin:2.2em 0}
+.prose code{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:.86em;padding:.12em .4em;border:1px solid var(--line);border-radius:var(--r);background:var(--glass)}
+.prose pre{margin:0 0 1.2em;padding:16px 18px;border:1px solid var(--line);border-radius:var(--r);background:rgba(12,12,19,.86);overflow-x:auto;font-size:14.5px;line-height:1.55}
+.prose pre code{padding:0;border:0;background:none;font-size:inherit}
+
+/* таблица: на широком экране — обычная, на телефоне строки складываются в карточки (см. ниже) */
+.table{margin:1.5em 0 1.7em;border:1px solid var(--line);border-radius:var(--r);background:rgba(12,12,19,.72);overflow-x:auto}
+.prose table{width:100%;border-collapse:collapse;font-size:16px;line-height:1.5}
+.prose th{padding:13px 18px;text-align:left;vertical-align:bottom;font-family:var(--pix);font-weight:500;font-size:15px;letter-spacing:.14em;text-transform:uppercase;color:var(--violet);border-bottom:1px solid var(--line-hi)}
+.prose td{padding:14px 18px;vertical-align:top;border-bottom:1px solid var(--line)}
+.prose tr:last-child td{border-bottom:0}
+.prose td:first-child{color:var(--ink)}
+.prose tbody tr{transition:background .4s var(--ease)}
+.prose tbody tr:hover{background:rgba(157,143,240,.05)}
+
+.a-article.no-toc{grid-template-columns:minmax(0,720px)}
+.a-article.no-toc .a-head,.a-article.no-toc .prose{grid-column:1}
+
+/* ───────── низ статьи ───────── */
+.a-more{max-width:1004px;margin:clamp(48px,8vh,84px) auto 0}
+.a-more .a-row:last-child{border-bottom:1px solid var(--line)}
+.a-more .a-title{font-size:clamp(28px,3vw,38px)}
+.a-nav{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;max-width:1004px;margin:34px auto 0}
+.arr.l,.arr.r{font-style:normal}
+.btn:hover .arr.l{transform:translateX(-4px)}
+.btn:hover .arr.r{transform:translateX(4px)}
+
+/* ───────── планшет и телефон ───────── */
+@media (max-width:1040px){
+  .a-article,.a-article.no-toc{grid-template-columns:minmax(0,720px)}
+  .a-head,.prose{grid-column:1}
+  .prose{grid-row:auto}
+  .toc{display:none}
+}
+@media (max-width:900px){
+  .a-menu{display:flex;gap:20px}
+}
+@media (max-width:720px){
+  .a-row{grid-template-columns:1fr;padding:24px 0 26px}
+  .a-side{order:2;padding-top:0}
+  .a-side .a-meta{flex-direction:row;align-items:center;gap:8px}
+  .a-side .dot{display:inline}
+  .a-body{display:contents}
+  .a-body .labels{order:0;margin-bottom:6px}
+  .a-body .a-title{order:1;margin-bottom:4px}
+  .a-body .a-lead{order:3;margin:4px 0 8px}
+  .a-body .tags{order:4}
+}
+@media (max-width:620px){
+  .a-main{padding:calc(58px + 4vh) 18px 5vh}
+  .a-menu{gap:16px;font-size:13.5px}
+  .a-h1{font-size:clamp(40px,12.5vw,56px)}
+  .a-head .a-h1{font-size:clamp(36px,11vw,50px)}
+  .prose{font-size:17px;line-height:1.65}
+  .prose h2{font-size:32px}
+  .prose h3{font-size:25px}
+  /* подсказка «Исследовано ИИ» — от левого края ряда меток, чтобы не упиралась в край экрана */
+  .labels{position:relative;z-index:3}
+  .label.ai{position:static}
+  .ai-tip{max-width:min(290px,100%)}
+  .ai-tip::before{display:none}
+  .f-name{width:100%;margin-bottom:2px}
+  .f-chip{height:32px}
+  .a-nav .btn{width:100%}
+  .a-page .foot{margin-top:52px}
+  /* таблица карточками: подпись столбца над значением, без прокрутки вбок */
+  .table{border:0;background:none;overflow:visible}
+  .prose table,.prose tbody,.prose tr,.prose td{display:block;width:auto}
+  .prose thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+  .prose tr{margin-bottom:10px;border:1px solid var(--line);border-radius:var(--r);background:rgba(12,12,19,.72)}
+  .prose td{padding:12px 14px;font-size:15.5px}
+  .prose td::before{content:attr(data-label);display:block;margin-bottom:4px;font-family:var(--pix);font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--violet)}
+}

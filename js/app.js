@@ -162,6 +162,9 @@ function goTo(y) {
   if (smooth) { if (!gliding) sy = scrollY; ty = y; gliding = true; }
   else scrollTo({ top: y, behavior: reduce ? 'auto' : 'smooth' });
 }
+// ссылки на свои страницы (статьи) — сразу полным адресом: при смене языка адрес страницы
+// меняется на /en/ без перезагрузки, и относительная ссылка увела бы не туда
+$$('a[data-local]').forEach(a => { a.href = a.href; });
 $$('[data-nav]').forEach(a => a.addEventListener('click', e => {
   const id = a.getAttribute('href').slice(1);
   e.preventDefault();
